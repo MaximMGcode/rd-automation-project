@@ -1,6 +1,6 @@
 
 /**
- * @param {number} numbers
+ * @param {number[]} numbers
  * @returns {number}
  */
 function getBiggestNumber(numbers) {
