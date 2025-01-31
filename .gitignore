@@ -1,0 +1,51 @@
+# System-specific files (Mac, Windows, Linux)
+.DS_Store
+Thumbs.db
+*.log
+
+# Node.js environment
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build directories
+dist/
+build/
+
+# VS Code configuration and settings
+.vscode/
+.vscode-test/
+
+# IDE and editor-related files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies for TypeScript and Next.js builds
+*.tsbuildinfo
+
+# Temporary files and caches
+.tmp/
+.cache/
+
+# Test coverage reports
+coverage/
+
+# Parcel, Webpack, or similar bundlers
+.parcel-cache/
+.next/
+out/
+.vite/
+.vite-deps/
+
+# Git-specific files
+.git/
