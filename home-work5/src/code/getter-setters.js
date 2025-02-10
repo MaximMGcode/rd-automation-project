@@ -3,7 +3,7 @@
 const userProfile = {
     name: "John Doe",
     age: 30,
-    email: "john.doe@example.com",
+    _email: "john.doe@example.com",
     address: {
         street: "123 Main St",
         city: "New York",
@@ -13,8 +13,8 @@ const userProfile = {
             lng: -74.0060
         }
     },
-    hobbies: ["reading", "gaming", "hiking"],
-    friends: [
+    _hobbies: ["reading", "gaming", "hiking"],
+    _friends: [
         {
             name: "Alice",
             age: 28,
@@ -26,15 +26,24 @@ const userProfile = {
             email: "bob@example.com"
         }
     ],
-    get getAllHobbies() {
-        return 'The user\'s hobbies ' + this.hobbies.join(', ');
+    get hobbies() {
+        return 'The user\'s hobbies ' + this._hobbies.join(', ');
     },
-    get getFriends() {
+    set friends(friendInfo) {
+        this._friends.push(
+            {
+                name: friendInfo[0],
+                age: friendInfo[1],
+                email: friendInfo[2]
+            }
+        );
+    },
+    get friends() {
         let allFriends = '';
 
-        for (let index = 0; index < this.friends.length; index++) {
+        for (let index = 0; index < this._friends.length; index++) {
 
-            const currentFriend = this.friends[index];
+            const currentFriend = this._friends[index];
             const friendInfo = (
                 `${index+1}.Friend name ${currentFriend.name} ` +
                 `and email ${currentFriend.email} ` +
@@ -47,28 +56,21 @@ const userProfile = {
         return allFriends;
 
     },
-    set changeEmail(email) {
-        this.email = email;
+    get email() {
+        return this._email;
     },
-    set makeNewFriend(friendInfo) {
-        this.friends.push(
-            {
-                name: friendInfo[0],
-                age: friendInfo[1],
-                email: friendInfo[2]
-            }
-        );
+    set email(NewEmail) {
+        this._email = NewEmail;
     }
 };
 
-// Get some information about user
-console.log(userProfile.getFriends);
-console.log(userProfile.getAllHobbies);
+// Get information about hobbies
+console.log(userProfile.hobbies);
 
-// Change email
-userProfile.changeEmail = 'john_work_email.doe@example.com';
+// get and set email
+userProfile.email = 'john_work_email.doe@example.com';
 console.log(userProfile.email);
 
-// Add new friend to user
-userProfile.makeNewFriend = ['Marta', 26, 'marta@example.com'];
-console.log(userProfile.getFriends);
+// Get and set friends
+userProfile.friends = ['Marta', 26, 'marta@example.com'];
+console.log(userProfile.friends);
