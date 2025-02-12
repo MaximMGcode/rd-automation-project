@@ -19,4 +19,6 @@ async function showResponseInfoToConsole() {
 
 
 // Success resp
-showResponseInfoToConsole();
+(async (asyncFunction) => {
+    await asyncFunction();
+})(showResponseInfoToConsole);

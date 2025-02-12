@@ -5,7 +5,7 @@ async function makeRequest(url) {
 
     try {
         const response = await fetch(incorrectUrl);
-        if (response.status === 404) {
+        if (!response.ok) {
             const response = await fetch(correctUrl);
             return await response.json();
         }
@@ -17,10 +17,12 @@ async function makeRequest(url) {
 
 async function showResponseInfoToConsole() {
     console.log(
-        await makeRequest(' https://pokeapi.co/api/v2/pokemon/squirtle')
+        await makeRequest('https://pokeapi.co/api/v2/pokemon/squirtle')
     );
 }
 
 
 // Show response
-showResponseInfoToConsole();
+(async (asyncFunction) => {
+    await asyncFunction();
+})(showResponseInfoToConsole);

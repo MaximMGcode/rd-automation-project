@@ -7,16 +7,19 @@ function makeRequest(url) {
             } else {
                 return response.json();
             }
+        }).then((jsonData) => {
+            return jsonData;
         });
 }
 
 
-function showResponseInfoToConsole() {
-    makeRequest('https://pokeapi.co/api/v2/pokemon/squirtle').then((jsonData) => {
-        console.log(jsonData);
-    });
+function showResponseInfoToConsole(jsonData) {
+    console.log(jsonData);
 }
 
 
-// Success resp
-showResponseInfoToConsole();
+// Url
+const requestUrl = 'https://pokeapi.co/api/v2/pokemon/squirtle';
+// Call function
+makeRequest(requestUrl)
+    .then(showResponseInfoToConsole);
