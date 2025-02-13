@@ -19,6 +19,6 @@ async function showResponseInfoToConsole() {
 
 
 // Success resp
-(async (asyncFunction) => {
-    await asyncFunction();
-})(showResponseInfoToConsole);
+(async () => {
+    await showResponseInfoToConsole();
+})();

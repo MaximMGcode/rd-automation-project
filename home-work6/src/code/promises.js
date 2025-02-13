@@ -1,4 +1,8 @@
 
+function showResponseInfoToConsole(jsonData) {
+    console.log(jsonData);
+}
+
 function makeRequest(url) {
     return fetch(url)
         .then((response) => {
@@ -8,13 +12,8 @@ function makeRequest(url) {
                 return response.json();
             }
         }).then((jsonData) => {
-            return jsonData;
+            showResponseInfoToConsole(jsonData);
         });
-}
-
-
-function showResponseInfoToConsole(jsonData) {
-    console.log(jsonData);
 }
 
 
@@ -22,4 +21,5 @@ function showResponseInfoToConsole(jsonData) {
 const requestUrl = 'https://pokeapi.co/api/v2/pokemon/squirtle';
 // Call function
 makeRequest(requestUrl)
-    .then(showResponseInfoToConsole);
+    .then(() => console.log('Request completed'))
+    .catch(error => console.error("Error:", error));

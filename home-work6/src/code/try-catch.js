@@ -23,6 +23,6 @@ async function showResponseInfoToConsole() {
 
 
 // Show response
-(async (asyncFunction) => {
-    await asyncFunction();
-})(showResponseInfoToConsole);
+(async () => {
+    await showResponseInfoToConsole();
+})();
