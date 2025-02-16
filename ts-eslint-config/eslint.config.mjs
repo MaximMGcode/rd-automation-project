@@ -41,11 +41,14 @@ export default tsEslint.config({
         '@stylistic/no-multiple-empty-lines': ['error', { max: 2 }],
         '@stylistic/no-trailing-spaces': ['error', { skipBlankLines: false }],
         '@stylistic/eol-last': ['error', 'always'],
+        '@stylistic/space-infix-ops': 'error',
         'unicorn/filename-case': [
             'error',
             {
                 case: 'kebabCase'
             }
-        ]
+        ],
+        
+        '@stylistic/comma-spacing': ['error', { before: false, after: true }],
     }
 });
