@@ -1,6 +1,6 @@
 
-const addElements = (elements: (number | string)[]): (string | number | never) => {
-    if (elements.length <= 0) {
+const addElements = (elements: number[] | string[]): string | number => {
+    if (elements.length === 0) {
         throw new Error('Array is empty!');
     }
 
@@ -22,8 +22,8 @@ const addElements = (elements: (number | string)[]): (string | number | never) =
     return resultOfAddition ;
 };
 
-const arrayWithNumbers: number[] = [123, 33, 22, 10, 9, 8, 4, 66];
-const arrayWithWords: string[]  = ['Hello ', 'world', '.\n', 'I am ', 'trying', ' to', ' learn', ' JS'];
+const arrayWithNumbers = [123, 33, 22, 10, 9, 8, 4, 66];
+const arrayWithWords = ['Hello ', 'world', '.\n', 'I am ', 'trying', ' to', ' learn', ' JS'];
 
 const res1: number = addElements(arrayWithNumbers) as number;
 const res2: string = addElements(arrayWithWords) as string;
