@@ -34,7 +34,7 @@ class Calculator {
             console.log('Error: Division by zero is not allowed.');
         } else {
             this.sumOfNumbers = this.numberOne / this.numberTwo;
-            console.log(`Sum of divide operation, ${this.numberOne} * ${this.numberTwo} = ${this.sumOfNumbers}`);
+            console.log(`Sum of divide operation, ${this.numberOne} / ${this.numberTwo} = ${this.sumOfNumbers}`);
             this.sumOfNumbers = null;
         }
 
