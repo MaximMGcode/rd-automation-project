@@ -23,7 +23,7 @@ abstract class Car {
 
 }
 
-class ElectricPorsche extends Car {
+export class ElectricPorsche extends Car {
 
     public maxSpeedOfCar: number;
     public shapeOfCar: string;
@@ -59,9 +59,3 @@ class ElectricPorsche extends Car {
 
 
 }
-
-const porsche = new ElectricPorsche(260, 'medium sedan', 'Electric 250 kW');
-porsche.startEngine();
-porsche.pickUpSpeed(40);
-porsche.StopEngine();
-porsche.showCarInfo();

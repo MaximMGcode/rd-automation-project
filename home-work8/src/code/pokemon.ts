@@ -1,8 +1,7 @@
 import { PokemonCard } from './interface-pokemon-card';
-import { getPokeCard } from './get-pokemon-card';
 
 
-class Pokemon {
+export class Pokemon {
 
     public nameOfPokemon: string;
     public nextLevelAfterEvolve: string;
@@ -23,12 +22,3 @@ class Pokemon {
         console.log(fullInfo);
     }
 }
-
-
-const apiUrl = 'https://api.pokemontcg.io/v2/cards/xy1-1';
-
-(async () => {
-    const cardData = await getPokeCard(apiUrl);
-    const newPokemon = new Pokemon(cardData);
-    newPokemon.getPokemonInfo();
-})();

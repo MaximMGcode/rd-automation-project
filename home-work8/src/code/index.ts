@@ -1,45 +1,36 @@
 
+import { getPokeCard } from './get-pokemon-card';
+import { PokemonCard } from './interface-pokemon-card';
+import { Calculator } from './calculator';
+import { Pokemon } from './pokemon';
+import { ElectricPorsche } from './abstraction';
 
-class Calculator {
 
-    private numberOne: number;
-    private numberTwo: number;
-    private sumOfNumbers: number | null;
+const apiUrl2 = 'https://api.pokemontcg.io/v2/cards/xy1-1';
 
-    public constructor(numberOne: number, numberTwo: number) {
-        this.numberOne = numberOne;
-        this.numberTwo = numberTwo;
-        this.sumOfNumbers = null;
-    }
+(async () => {
+    const cardData2 = await getPokeCard(apiUrl2);
+    const newPokemon = new Pokemon(cardData2);
+    newPokemon.getPokemonInfo();
+})();
 
-    public addition(): void {
-        this.sumOfNumbers = this.numberOne + this.numberTwo;
-        console.log(`Sum of addition operation, ${this.numberOne} + ${this.numberTwo} = ${this.sumOfNumbers}`);
-        this.sumOfNumbers = null;
-    }
-    public minus(): void {
-        this.sumOfNumbers = this.numberOne - this.numberTwo;
-        console.log(`Sum of minus operation, ${this.numberOne} - ${this.numberTwo} = ${this.sumOfNumbers}`);
-        this.sumOfNumbers = null;
-    }
 
-    public multiply(): void {
-        this.sumOfNumbers = this.numberOne * this.numberTwo;
-        console.log(`Sum of multiply operation, ${this.numberOne} * ${this.numberTwo} = ${this.sumOfNumbers}`);
-        this.sumOfNumbers = null;
-    }
+const apiUrl1 = 'https://api.pokemontcg.io/v2/cards/xy1-1';
+let cardData1: PokemonCard | null = null;
 
-    public divide(): void {
-        if (this.numberTwo === 0) {
-            console.log('Error: Division by zero is not allowed.');
-        } else {
-            this.sumOfNumbers = this.numberOne / this.numberTwo;
-            console.log(`Sum of divide operation, ${this.numberOne} / ${this.numberTwo} = ${this.sumOfNumbers}`);
-            this.sumOfNumbers = null;
-        }
+(async () => {
+    cardData1 = await getPokeCard(apiUrl1);
+    console.log(cardData1.data.name);
+    console.log(cardData1.data.id);
+    console.log(cardData1.data.evolvesTo[0]);
+})();
 
-    }
-}
+const porsche = new ElectricPorsche(260, 'medium sedan', 'Electric 250 kW');
+porsche.startEngine();
+porsche.pickUpSpeed(40);
+porsche.StopEngine();
+porsche.showCarInfo();
+
 
 const calc = new Calculator(10, 5);
 calc.addition();  // 10 + 5 = 15
