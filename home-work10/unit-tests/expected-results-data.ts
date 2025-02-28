@@ -1,5 +1,4 @@
 
-
 export const expectedResults = {
     starEngine: 'The Porsche Taycan car is ready to drive',
     stopEngineAgain: 'The Porsche Taycan car already has the engine started',
@@ -10,4 +9,3 @@ export const expectedResults = {
     successChangeGear: 'The Porsche Taycan car changed to gear',
     failedChangeGear: 'You cannot change gears without starting the engine or without battery capacity'
 };
-
