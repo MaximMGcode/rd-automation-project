@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "6d0b0c7d-625d-4e39-a6bc-1e6bdc8d0e97",
+		"name": "Joke API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5518228"
+	},
+	"item": [
+		{
+			"name": "/random_joke",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that random joke has correct status\", function () {",
+							"    const jokeStatuses = [\"general\", \"knock-knock\", \"programming\", \"dad\"];",
+							"    let statusOfJoke = pm.response.json();",
+							"    let hasCorrectStatusInBody = false;",
+							"",
+							"    if (statusOfJoke && statusOfJoke.type && jokeStatuses.includes(statusOfJoke.type)) {",
+							"        hasCorrectStatusInBody = true;",
+							"    }",
+							"",
+							"    pm.expect(hasCorrectStatusInBody).to.equal(true);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test: Validate joke response\", function () {",
+							"    const response = pm.response.json();",
+							"",
+							"    pm.expect(response).to.be.an(\"object\", \"Response is not an object\");",
+							"    pm.expect(response).to.have.property(\"type\").that.is.a(\"string\");",
+							"    pm.expect(response).to.have.property(\"setup\").that.is.a(\"string\");",
+							"    pm.expect(response).to.have.property(\"punchline\").that.is.a(\"string\");",
+							"    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");",
+							"",
+							"    const allowedTypes = [\"general\", \"knock-knock\", \"programming\", \"dad\"];",
+							"    pm.expect(allowedTypes).to.include(response.type, \"Unexpected joke type\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseLocalApiUrl}}/random_joke",
+					"host": [
+						"{{baseLocalApiUrl}}"
+					],
+					"path": [
+						"random_joke"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that all statuses are correct\", function () {",
+							"    const jokeStatuses = [\"general\", \"knock-knock\", \"programming\", \"dad\"];",
+							"    const statusesOfJoke = pm.response.json();",
+							"",
+							"    pm.expect(statusesOfJoke.sort()).to.deep.equal(jokeStatuses.sort());",
+							"});",
+							"",
+							"pm.test(\"Test: check that joke has only four statuses\", function () {",
+							"    const jokeStatuses = [\"general\", \"knock-knock\", \"programming\", \"dad\"];",
+							"    const statusesOfJoke = pm.response.json();",
+							"",
+							"    pm.expect(statusesOfJoke.length).to.equal(4);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseLocalApiUrl}}/types",
+					"host": [
+						"{{baseLocalApiUrl}}"
+					],
+					"path": [
+						"types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/random_ten",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that response has 10 jokes\", function () {",
+							"    const response = pm.response.json();",
+							"    if (!response) {",
+							"        throw(\"Response is empty\")",
+							"    }",
+							"    let countOfJoke = 0;",
+							"",
+							"    for (let index = 0; index < response.length; index++) {",
+							"        countOfJoke++",
+							"    }",
+							"",
+							"    pm.expect(countOfJoke).to.deep.equal(10);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Test: Check that randome jokes have not dublicate in array\", function () {",
+							"    const response = pm.response.json();",
+							"    if (!response) {",
+							"        throw(\"Response is empty\")",
+							"    }",
+							"    let countOfJoke = 0;",
+							"",
+							"    for (let index = 0; index < response.length; index++) {",
+							"        countOfJoke++",
+							"    }",
+							"",
+							"    pm.expect(countOfJoke).to.deep.equal(10);",
+							"});",
+							"",
+							"pm.test(\"Test: Check that random jokes have no duplicates\", function () {",
+							"    const response = pm.response.json();",
+							"",
+							"    pm.expect(response).to.be.an(\"array\", \"Response is not an array\");",
+							"    pm.expect(response.length).to.equal(10, \"Expected 10 jokes in response\");",
+							"",
+							"    const jokeIds = response.map(joke => joke.id);",
+							"    const uniqueJokeIds = new Set(jokeIds);",
+							"",
+							"    pm.expect(uniqueJokeIds.size).to.equal(jokeIds.length, \"There are duplicate jokes in the response\");",
+							"",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseLocalApiUrl}}/random_ten",
+					"host": [
+						"{{baseLocalApiUrl}}"
+					],
+					"path": [
+						"random_ten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/jokes/random",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that response has jokes in count that provided in query\", function () {",
+							"    const response = pm.response.json();",
+							"    const expectedCount = +pm.request.url.path[2];",
+							"",
+							"    pm.expect(response.length).to.equal(expectedCount);",
+							"});",
+							"",
+							"pm.test(\"Test: Check that each joke is an Object\", function () {",
+							"    const response = pm.response.json();",
+							"",
+							"    response.forEach(joke => {",
+							"        pm.expect(joke).to.be.an('object');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseLocalApiUrl}}/jokes/random/25",
+					"host": [
+						"{{baseLocalApiUrl}}"
+					],
+					"path": [
+						"jokes",
+						"random",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/jokes/programming/random",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"TypeOfJoke\", \"programming\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that get joke by correst type\", function () {",
+							"    const expectedJokeType = pm.collectionVariables.get(\"TypeOfJoke\");",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData[0].type).to.equal(expectedJokeType);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseLocalApiUrl}}/jokes/{{TypeOfJoke}}/random",
+					"host": [
+						"{{baseLocalApiUrl}}"
+					],
+					"path": [
+						"jokes",
+						"{{TypeOfJoke}}",
+						"random"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseLocalApiUrl",
+			"value": "http://localhost:3005",
+			"type": "string"
+		},
+		{
+			"key": "StageApiUrl",
+			"value": "https://official-joke-api.appspot.com",
+			"type": "string"
+		},
+		{
+			"key": "TypeOfJoke",
+			"value": ""
+		}
+	]
+}
