@@ -1,0 +1,82 @@
+{
+  "consumer": {
+    "name": "Users-Web-v3"
+  },
+  "interactions": [
+    {
+      "description": "create a user",
+      "providerStates": [
+        {
+          "name": "user interaction"
+        }
+      ],
+      "request": {
+        "body": {
+          "code": 200,
+          "message": "9223372036854772964",
+          "type": "unknown"
+        },
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "method": "POST",
+        "path": "/v2/user"
+      },
+      "response": {
+        "body": {
+          "code": 200,
+          "message": "9223372036854772964",
+          "type": "unknown"
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "content-type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {},
+          "status": {}
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "14.0.0"
+    },
+    "pactRust": {
+      "ffi": "0.4.22",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "Users-API-v3"
+  }
+}

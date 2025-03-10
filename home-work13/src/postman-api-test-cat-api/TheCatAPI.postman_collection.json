@@ -1,0 +1,422 @@
+{
+	"info": {
+		"_postman_id": "5f713975-1388-4f30-ad12-2e2359542a1a",
+		"name": "TheCatAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5518228"
+	},
+	"item": [
+		{
+			"name": "upload image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: The request to create a photo was successfully executed.\", function () {",
+							"    pm.response.to.have.status(201); // Перевіряємо, що запит успішний",
+							"});",
+							"",
+							"pm.test(\"Test: A newly created photo ID and sub_id were received.\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    let subId = pm.collectionVariables.get(\"subId\");",
+							"    pm.collectionVariables.set(\"imageId\", jsonData.id); ",
+							"    pm.expect(jsonData).to.have.property(\"id\"); ",
+							"    pm.expect(jsonData).to.have.property(\"sub_id\", subId);",
+							"",
+							"",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							"function generateRandomId() {",
+							"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';",
+							"    let randomId = '';",
+							"    ",
+							"    for (let i = 0; i < 8; i++) {",
+							"        const randomIndex = Math.floor(Math.random() * characters.length);",
+							"        randomId += characters[randomIndex];",
+							"    }",
+							"",
+							"    return randomId;",
+							"}",
+							"",
+							"let newSubId = generateRandomId();",
+							"pm.collectionVariables.set(\"subId\",  newSubId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "6GGd-h63Z/premium_photo-1667030474693-6d0632f97029.jpeg"
+						},
+						{
+							"key": "sub_id",
+							"value": "{{baseUrl}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}images/upload",
+					"host": [
+						"{{baseUrl}}images"
+					],
+					"path": [
+						"upload"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/images/upload' \\\n--header 'x-api-key: DEMO-API-KEY' \\\n--form 'file=@\"/Users/aden/Dropbox/Mac/Downloads/bl4.jpeg\"' \\\n--form 'sub_id=\"my-user-1\"'"
+			},
+			"response": []
+		},
+		{
+			"name": "get image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"let imageId = pm.collectionVariables.get(\"imageId\");",
+							"",
+							"pm.test(\"Test: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test: Response contains valid image data\", function () {",
+							"    pm.expect(jsonData).to.have.property(\"id\", imageId);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.thecatapi.com/v1/images/{{imageId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thecatapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"{{imageId}}"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/images/BkIEhN3pG'"
+			},
+			"response": []
+		},
+		{
+			"name": "Add image to favourites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: add image by id SUCCESS\", function () {",
+							"     pm.expect(jsonData).to.have.property(\"message\", \"SUCCESS\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image_id\": \"{{imageId}}\",\n\t\"sub_id\": \"{{subId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}favourites",
+					"host": [
+						"{{baseUrl}}favourites"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/favourites' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: DEMO-API-KEY' \\\n--data '{\n\t\"image_id\":\"asf2\",\n\t\"sub_id\": \"my-user-1234\"\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get favourites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: There is added image to favourites bu subId\", function () {",
+							"    let response = pm.response.json();",
+							"    let subId = pm.collectionVariables.get(\"subId\");",
+							"    let imageFound = false;",
+							"    ",
+							"    for (let arrayData of response) {",
+							"        if (arrayData.sub_id === subId) {",
+							"            imageFound = true;",
+							"            break;",
+							"        }",
+							"    }",
+							"    pm.expect(imageFound).to.be.true; ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}favourites",
+					"host": [
+						"{{baseUrl}}favourites"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/favourites' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: DEMO-API-KEY'"
+			},
+			"response": []
+		},
+		{
+			"name": "Add vote",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Response contains the expected structure\", function () {",
+							"    let response = pm.response.json();",
+							"    ",
+							"    pm.expect(response).to.have.property(\"message\");",
+							"    pm.expect(response).to.have.property(\"id\");",
+							"    pm.expect(response).to.have.property(\"image_id\");",
+							"    pm.expect(response).to.have.property(\"sub_id\");",
+							"    pm.expect(response).to.have.property(\"value\");",
+							"    pm.expect(response).to.have.property(\"country_code\");",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"voteId\",  pm.response.json().id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image_id\": \"{{imageId}}\",\n\t\"sub_id\": \"{{subId}}\",\n    \"value\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}votes",
+					"host": [
+						"{{baseUrl}}votes"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/votes' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: DEMO-API-KEY' \\\n--data '{\n\t\"image_id\":\"asf2\",\n\t\"sub_id\": \"my-user-1234\",\n    \"value\":1\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get vote by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Check that image added to vote\", function () {",
+							"    let imageId = pm.collectionVariables.get(\"imageId\"); ",
+							"    let voteId = pm.collectionVariables.get(\"voteId\"); ",
+							"    ",
+							"    pm.expect(pm.response.json()).to.have.property(\"image_id\", imageId);",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\", voteId);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"url": {
+					"raw": "https://api.thecatapi.com/v1/votes/:vote_id?",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thecatapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"votes",
+						":vote_id"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					],
+					"variable": [
+						{
+							"key": "vote_id",
+							"value": "{{voteId}}"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/votes/:vote_id' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: DEMO-API-KEY'"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiKey",
+			"value": "request_to_owner",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://api.thecatapi.com/v1/",
+			"type": "string"
+		},
+		{
+			"key": "imageId",
+			"value": ""
+		},
+		{
+			"key": "image_id",
+			"value": ""
+		},
+		{
+			"key": "sub_id",
+			"value": ""
+		},
+		{
+			"key": "subId",
+			"value": ""
+		},
+		{
+			"key": "voteId",
+			"value": ""
+		}
+	]
+}
