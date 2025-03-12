@@ -308,14 +308,84 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Test: Check that image added to vote\", function () {",
-							"    let imageId = pm.collectionVariables.get(\"imageId\"); ",
-							"    let voteId = pm.collectionVariables.get(\"voteId\"); ",
+							"pm.test(\"Test: Response should contain a valid image object\", function () {",
+							"    let imageId = pm.collectionVariables.get(\"imageId\");",
+							"    let responseData = pm.response.json();",
 							"    ",
-							"    pm.expect(pm.response.json()).to.have.property(\"image_id\", imageId);",
-							"    pm.expect(pm.response.json()).to.have.property(\"id\", voteId);",
+							"    pm.expect(responseData).to.have.property(\"image\");",
+							"    pm.expect(responseData.image).to.be.an(\"object\");",
+							"    pm.expect(responseData.image).to.have.property(\"id\").that.is.a(\"string\");",
+							"    pm.expect(responseData.image).to.have.property(\"url\").that.is.a(\"string\");",
+							"    pm.expect(responseData.image).to.have.property(\"id\", imageId);",
+							"    pm.expect(responseData).to.have.property(\"image\").that.is.an(\"object\");",
 							"});",
+							"",
 							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-api-key",
+						"value": "{{apiKey}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}votes/:vote_id?",
+					"host": [
+						"{{baseUrl}}votes"
+					],
+					"path": [
+						":vote_id"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					],
+					"variable": [
+						{
+							"key": "vote_id",
+							"value": "{{voteId}}"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.thecatapi.com/v1/votes/:vote_id' \\\n--header 'Content-Type: application/json' \\\n--header 'x-api-key: DEMO-API-KEY'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get vote non existing id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: Invalid imageId should return 400 or 404\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+							"",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let invalidImageId = \"non_existing_id\";",
+							"pm.collectionVariables.set(\"nonExistingId\",  invalidImageId);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -356,7 +426,7 @@
 					"variable": [
 						{
 							"key": "vote_id",
-							"value": "{{voteId}}"
+							"value": "{{nonExistingId}}"
 						}
 					]
 				},
@@ -390,7 +460,7 @@
 	"variable": [
 		{
 			"key": "apiKey",
-			"value": "request_to_owner",
+			"value": "-",
 			"type": "string"
 		},
 		{
@@ -416,6 +486,10 @@
 		},
 		{
 			"key": "voteId",
+			"value": ""
+		},
+		{
+			"key": "nonExistingId",
 			"value": ""
 		}
 	]
